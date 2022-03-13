@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Chat interface</title>
+	<style>
+	@import url('https://fonts.googleapis.com/css2?family=Comforter&family=Indie+Flower&family=Neonderthaw&family=Neucha&family=Sedgwick+Ave&family=Supermercado+One&family=Zen+Kurenaido&display=swap');
+	</style>
+  <style>
+  *{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Arial;
+	font-size: 16px;
+	
+}
+
+/*container of the whole chat*/
+.chat_window{
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+/*superior part of the chat - container with the logo and the menu options */
+.shapka{
+	background-color: dodgerblue;
+	min-height: 50px;
+	width: 100%;
+	display: grid;
+	grid-template-columns: auto auto auto;
+	align-items: center;
+	padding: 5px 10px;
+}
+
+/*logo section in .shapka*/
+.logo{
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.logo_img{
+	height: 40px;
+	margin-right: 10px;
+}
+
+.logo_name{
+	font-size: 1.8em;
+	font-family: 'Zen Kurenaido', sans-serif;
+	color: white;
+	font-weight: 900;
+}
+
+/*search section in .shapka*/
+.search{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.search_input{
+	height: 30px;
+	flex: 1;
+	position: relative;
+	border: none;
+	border-radius: 15px;
+	padding: 0 75px 0 15px;
+}
+
+.search_button{
+	position: relative;
+	right: 75px;
+	height: 25px;
+	width: 70px;
+	border-radius: 15px;
+	border: none;
+	background-color: rgb(241, 240, 240);
+}
+
+.search_button:hover{
+	background-color: gray;
+	color: white;
+}
+
+/*menu with options in .shapka*/
+.menu{
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.menu ul{
+	list-style: none;
+	z-index: 1;
+
+}
+
+.options{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-decoration: none;
+	color: black;
+	width: 100px;
+	height: 30px;
+	background-color: rgb(241, 240, 240);
+	border-radius: 15px;
+	float: left;
+}
+
+.options:hover{
+	background-color: gray;
+	color: white;
+}
+
+.menu li>ul{
+	display: none;
+}
+
+.menu li:hover>ul{
+	display: block;
+}
+
+
+/*container with the panel_contacts and the panel_conversations*/
+.chat_container{
+	width: 100%;
+	flex: 1;
+	overflow-y: hidden;
+	display: flex;
+}
+
+/*container of the contact chats*/
+.panel_contacts{
+	background-color: rgb(241, 240, 240);
+	overflow-y: scroll;
+	width: 200px;
+}
+
+/*chat configuration of the .panel_contacts*/
+.chats{
+	height: 75px;
+	background-color: white;
+	border: 1px solid;
+	border-color: rgb(241, 240, 240);
+	box-shadow: 1px 1px 1px 1px rgb(241, 240, 240);
+	border-top: 0;
+	border-right: 0;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+
+}
+
+.chats:hover{
+	background-color: rgb(241, 240, 240);
+}
+
+.avatar{
+	height: 50px;
+	width: 50px;
+	margin: auto 0 auto auto;
+}
+
+.contact_name{
+	font-size: 1.05em;
+	margin: auto;
+}
+
+/*section with the messages of the chat*/
+.panel_conversation{
+	width: 100%;
+	overflow-y: scroll;
+	background-color: rgb(241, 240, 240);
+}
+
+.right{
+	justify-content: flex-end;
+}
+
+.left{
+	justify-content: flex-start;
+}
+
+.messages_row{
+	width: 100%;
+	background-color: white;
+	min-height: 36.5px;
+	display: flex;
+	padding: 10px;
+}
+
+
+.message_box{
+	min-width: 75px;
+	max-width: 40%;
+	min-height: 36.5px;
+	background-color: dodgerblue;
+	padding: 10px 60px 10px 10px;
+	overflow-wrap: break-word;
+	border-radius: 15px;
+}
+
+.to{
+	background-color: dodgerblue;
+	color: white;
+}
+
+.from{
+	background-color: rgb(241, 240, 240);
+}
+
+/*podval container -- it contains text input with send button*/
+.podval{
+	justify-content: flex-end;
+	background-color: rgb(221, 220, 220);
+	min-height: 100px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	padding: 20px 0;
+}
+
+/*text input in div like a textarea*/
+.message_input{
+	resize: none;
+	width: 80%;
+	min-height: 60px;
+	max-height: 200px;
+	overflow-y: auto;
+	border: 0;
+	border-radius: 15px;
+	margin: auto 10px auto auto;
+	padding: 10px;
+	background-color: white;
+}
+
+
+/*send button configurations*/
+.button_send{
+	height: 50px;
+	width: 100px;
+	border: 0;
+	background-color: dodgerblue;
+	color: white;
+	border-radius: 15px;
+	margin: auto auto auto 0;
+}
+.button_send:hover{
+	background-color: rgb(241, 240, 240);
+	color: black;
+}
+
+/*scrollbar configurations*/
+.panel_contacts::-webkit-scrollbar, .panel_conversation::-webkit-scrollbar, .message_input::-webkit-scrollbar{
+	width: 10px;
+	background-color: transparent;
+}
+
+.panel_contacts::-webkit-scrollbar-thumb, .message_input::-webkit-scrollbar-thumb{
+	background-color: rgb(221, 220, 220);
+	border-radius: 5px;
+}
+
+.panel_conversation::-webkit-scrollbar-thumb{
+	background-color: dodgerblue;
+	border-radius: 5px;
+}
+
+.panel_contacts::-webkit-scrollbar-thumb:hover, .panel_conversation::-webkit-scrollbar-thumb:hover{
+	background-color: gray;
+}
+
+
+  </style>
+	<link rel="stylesheet" type="text/css" href="gettingJob.css">
+</head>
+<body>
+	<div class="chat_window">
+		<section class="shapka">
+			<div class="logo">
+				<img src="http://cdn.onlinewebfonts.com/svg/img_452925.png" class="logo_img">
+				<span class="logo_name">JustAChat</span>
+			</div>
+			<div class="search">
+				<input type="search" class="search_input">
+				<button class="search_button">search</button>
+			</div>
+			<nav class="menu">
+				<ul>
+					<li><span class="options">More</span>
+						<ul>
+							<li><span class="options">Add</span></li>
+							<li><span class="options">Call</span></li>
+							<li><span class="options">Videocall</span></li>
+						</ul>
+					</li>
+				</ul>
+			</nav>
+		</section>
+		<section class="chat_container">
+			<div class="panel_contacts">
+				<div class="chats"><img class="avatar" src="https://icon-library.com/images/avatar-icon-png/avatar-icon-png-17.jpg"><span class="contact_name">Mom ❤️</span></div>
+				<div class="chats"><img class="avatar" src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png"><span class="contact_name">MyFriend</span></div>
+				<div class="chats"><img class="avatar" src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png"><span class="contact_name">MyFriend</span></div>
+				<div class="chats"><img class="avatar" src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png"><span class="contact_name">MyFriend</span></div>
+				<div class="chats"><img class="avatar" src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png"><span class="contact_name">MyFriend</span></div>
+				<div class="chats"><img class="avatar" src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png"><span class="contact_name">MyFriend</span></div>
+				<div class="chats"><img class="avatar" src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png"><span class="contact_name">MyFriend</span></div>
+				<div class="chats"><img class="avatar" src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png"><span class="contact_name">MyFriend</span></div>
+				<div class="chats"><img class="avatar" src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png"><span class="contact_name">MyFriend</span></div>
+				<div class="chats"><img class="avatar" src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png"><span class="contact_name">MyFriend</span></div>
+				<div class="chats"><img class="avatar" src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png"><span class="contact_name">MyFriend</span></div>
+
+
+			</div>
+			<div class="panel_conversation">
+				<div class="messages_row right"><div class="message_box from"><p class="message_text">Did you clean your room today?</p></div></div>
+				<div class="messages_row left"><div class="message_box to"><p class="message_text">No, not yet.</p></div></div>
+				<div class="messages_row right"><div class="message_box from"><p class="message_text">When were you planning on doing that?</p></div></div>
+				<div class="messages_row left"><div class="message_box to"><p class="message_text">I'm going to clean it up later.</p></div></div>
+				<div class="messages_row right"><div class="message_box from"><p class="message_text">Didn't I ask you to clean it up earlier?</p></div></div>
+				<div class="messages_row left"><div class="message_box to"><p class="message_text">I'm going to clean it.</p></div></div>
+				<div class="messages_row right"><div class="message_box from"><p class="message_text">I want you to vacuum in your room, and don't forget to dust everything.</p></div></div>
+				<div class="messages_row left"><div class="message_box to"><p class="message_text">I know. I'll do it.</p></div></div>
+				<div class="messages_row right"><div class="message_box from"><p class="message_text">Make sure you clean it up before you do anything else.</p></div></div>
+				<div class="messages_row left"><div class="message_box to"><p class="message_text">I'm not going anywhere until later, so I'll clean it then.</p></div></div>
+				<div class="messages_row right"><div class="message_box from"><p class="message_text">Have you begun cleaning up that room of yours?</p></div></div>
+				<div class="messages_row left"><div class="message_box to"><p class="message_text">I haven't started yet, but I will.</p></div></div>
+				<div class="messages_row right"><div class="message_box from"><p class="message_text">What time are you going to clean it up?</p></div></div>
+				<div class="messages_row left"><div class="message_box to"><p class="message_text">I'm planning on cleaning it up a little later.</p></div></div>
+				<div class="messages_row right"><div class="message_box from"><p class="message_text">I told you to clean it up earlier.</p></div></div>
+				<div class="messages_row left"><div class="message_box to"><p class="message_text">I know. I am still going to clean it up.</p></div></div>
+				<div class="messages_row right"><div class="message_box from"><p class="message_text">Make sure you vacuum and dust your room.</p></div></div>
+				<div class="messages_row left"><div class="message_box to"><p class="message_text">I won't forget.</p></div></div>
+				<div class="messages_row right"><div class="message_box from"><p class="message_text">I don't want you to leave until you clean up.</p></div></div>
+				<div class="messages_row left"><div class="message_box to"><p class="message_text">My plans aren't until later, so I'll clean it before I go.</p></div></div>
+				<div class="messages_row right"><div class="message_box from"><p class="message_text">Have you started cleaning up your room yet?</p></div></div>
+				<div class="messages_row left"><div class="message_box to"><p class="message_text">I haven't gotten started on my room yet.</p></div></div>
+				<div class="messages_row right"><div class="message_box from"><p class="message_text">When exactly do you plan on cleaning it?</p></div></div>
+				<div class="messages_row left"><div class="message_box to"><p class="message_text">I have every intention of cleaning my room later.</p></div></div>
+				<div class="messages_row right"><div class="message_box from"><p class="message_text">I thought I asked you to clean your room earlier.</p></div></div>
+				<div class="messages_row left"><div class="message_box to"><p class="message_text"> I already told you that I'm going to do it.</p></div></div>
+			</div>		
+		</section>
+		<section class="podval">
+				<div class="message_input" contenteditable></div>
+				<button class="button_send">Send</button>
+		</section>	
+	</div>
+</body>
+</html>
